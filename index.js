@@ -69,9 +69,10 @@ app.use(autentication);
 app.use('/petro',petroApp);
 
 
+const port =7000;
 
   
-app.listen(7000, async ()=>{
+app.listen(port, async ()=>{
   await connection;
 console.log('app runing at port 7000');
 })
