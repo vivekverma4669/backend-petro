@@ -17,6 +17,7 @@ app.get('/', (req,res)=>{
     res.send({'app runing u are on home page now ': req.headers});
 });
 
+
 app.post('/signup', async (req,res)=>{
     const { name , email , password} = req.body;
 
