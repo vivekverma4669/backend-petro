@@ -1,4 +1,4 @@
-const express= require('express');
+const express= require('express')
 const connection = require('./configs/db')
 const bcrypt = require('bcrypt');
 const UserModel = require('./models/User.module');
@@ -9,6 +9,7 @@ const cors = require('cors');
 const app= express();
 app.use(express.json());
 app.use(cors());
+require('dotenv').config();
 
 
 
@@ -18,11 +19,18 @@ app.get('/', (req,res)=>{
 
 app.post('/signup', async (req,res)=>{
     const { name , email , password} = req.body;
+
     try {
+         const user= await UserModel.findOne({ email : email});
+         if(!user){
+
            bcrypt.hash(password, 4, async function(err, hash) {
            await  UserModel.create({name : name , email : email , password : hash});
            res.send({ msg : ' sign up succusfull ' ,name : name , email : email , password : hash});
         });
+    }else{
+        res.send('already register')
+    }
            
     } catch (error) {
         console.error(error);
@@ -41,8 +49,6 @@ app.post('/login', async (req, res) => {
         if (!user) {
             return res.status(400).json({ msg: 'User not found' });
         }
-
-
         bcrypt.compare(password, user.password, (err, result) => {
             if (err) {
                 throw err;
@@ -68,8 +74,9 @@ app.post('/login', async (req, res) => {
 app.use(autentication);
 app.use('/blogs', blogRouter);
   
-app.listen(7000, async ()=>{
+const Port=process.env.PORT;
+app.listen(Port, async ()=>{
   await connection;
-console.log('app runing at port 7000');
+console.log(`app runing at port ${Port}`);
 })
 
