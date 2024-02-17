@@ -13,6 +13,18 @@ require('dotenv').config();
 
 
 
+
+const main = async ()=>{
+    try {
+        await connection;
+        console.log('connected succesfully')
+    } catch (error) {
+        console.log(error);
+    }
+    
+}
+main();
+
 app.get('/', (req,res)=>{
     res.send({'app runing u are on home page now ': req.headers});
 });
@@ -76,8 +88,9 @@ app.use(autentication);
 app.use('/blogs', blogRouter);
   
 const Port=process.env.PORT;
+
 app.listen(Port, async ()=>{
-  await connection;
+//   await connection;
 console.log(`app runing at port ${Port}`);
 })
 
