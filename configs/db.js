@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 const URL = process.env.URL; 
-const connection = mongoose.connect(`${URL}blog`); 
+const connection = mongoose.connect(`${URL}task`); 
 module.exports = { connection};
 
 

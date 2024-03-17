@@ -3,7 +3,7 @@ const connection = require('./configs/db')
 const bcrypt = require('bcrypt');
 const UserModel = require('./models/User.module');
 const jwt = require('jsonwebtoken');
-const blogRouter = require('./Router/blog.Routes');
+const TaskRouter = require('./Router/Task.Routes');
 const {autentication}= require('./middleware/authentication');
 const cors = require('cors');
 const app= express();
@@ -21,7 +21,6 @@ const main = async ()=>{
     } catch (error) {
         console.log(error);
     }
-    
 }
 main();
 
@@ -55,13 +54,14 @@ app.post('/signup', async (req,res)=>{
 
 
 app.post('/login', async (req, res) => {
-    const { email, password } = req.body; 
+    const { email , password } = req.body; 
     try {
-        const user = await UserModel.findOne({ email });
+        const user = await UserModel.findOne({email});
 
         if (!user) {
             return res.status(400).json({ msg: 'User not found' });
         }
+
         bcrypt.compare(password, user.password, (err, result) => {
             if (err) {
                 throw err;
@@ -85,9 +85,9 @@ app.post('/login', async (req, res) => {
 
 
 app.use(autentication);
-app.use('/blogs', blogRouter);
+app.use('/task', TaskRouter);
   
-const Port=process.env.PORT;
+const Port=process.env.PORT  || 5000;
 
 app.listen(Port, async ()=>{
 //   await connection;
