@@ -10,6 +10,7 @@ jwt.verify(token, 'secret', (err, decoded) => {
         return res.status(401).json({ message: 'Invalid token' });
     }
     req.headers.userId = decoded.userId;
+    console.log(decoded.userId);
     next();
 });
 }

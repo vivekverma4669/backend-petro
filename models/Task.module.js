@@ -4,6 +4,8 @@ const TaskSchema = mongoose.Schema({
     content: { type: String, required: true },
     due_date: {type: String ,required :true},
     completed: { type: Boolean, required: true },
+    user_id: {type: String , required: true}
 });
 const TaskModel = mongoose.model('Task',TaskSchema);
 module.exports = TaskModel;
+
